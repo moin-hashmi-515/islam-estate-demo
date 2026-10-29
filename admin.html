@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islam Estate CMS — Admin Dashboard (Demo)</title>
+<style>
+:root{--orange:#E67E22;--line:#E5E5E5}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#F7F7F7;color:#222;line-height:1.5}
+.banner{background:#111;color:#fff;padding:12px 18px;font-size:13px}.banner b{color:var(--orange)}
+header{background:#fff;border-bottom:1px solid var(--line);padding:14px 18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.wrap{max-width:1100px;margin:0 auto;padding:18px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}.tabs button{border:1px solid var(--line);background:#fff;padding:9px 13px;border-radius:999px;cursor:pointer;font-weight:700}.tabs button.on{background:var(--orange);color:#fff}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kpi b{font-size:26px;display:block}table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid #eee;padding:8px;text-align:left;vertical-align:top}
+input,select,textarea{width:100%;padding:9px;border:1px solid #ddd;border-radius:9px;font-size:14px;margin-bottom:8px}label{font-size:12px;font-weight:700;display:block}
+button.btn{background:var(--orange);color:#fff;border:0;padding:9px 15px;border-radius:999px;font-weight:800;cursor:pointer;margin:2px}button.btn.small{padding:6px 10px;font-size:12px}button.btn.danger{background:#e57373}
+.msg{padding:10px;border-radius:10px;margin-bottom:12px;background:#EAF6EC}
+@media(max-width:800px){.grid,.grid3{grid-template-columns:1fr 1fr}}
+</style></head><body>
+<div class="banner"><b>DEMO CMS ONLY</b> — Data stays in this browser (localStorage, ie_* keys). No server, no real login, no real notifications. Do NOT enter real client data. <a href="index.html" style="color:var(--orange)">← View public demo portal</a></div>
+<header><div><h1 style="margin:0">Islam Estate — Listings CMS</h1><div style="font-size:13px;color:#666">DHA Lahore &bull; Demo only — sample listings are layouts, not real properties</div></div><div><button class="btn small" onclick="resetDemo()">Reset demo data</button></div></header>
+<div class="wrap"><div id="msg"></div><div class="tabs" id="tabs"></div><div id="view"></div></div>
+<script>
+const $=s=>document.querySelector(s); const uid=()=> 'id'+Math.random().toString(36).slice(2,9);
+const todayStr=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+function load(k,f){try{const v=JSON.parse(localStorage.getItem(k));return v==null?f:v}catch(e){return f}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function logAudit(a,d){const l=load('ie_audit',[]);l.unshift({t:new Date().toLocaleString('en-GB'),a,d});save('ie_audit',l.slice(0,100))}
+let listings=load('ie_listings',[
+{id:'l1',title:'Sample: 1 Kanal Plot — DHA Phase 5',phase:'Phase 5',type:'Plot',purpose:'Buy',price:'On enquiry',status:'Sample (not a real listing)',desc:'Sample layout only.'},
+{id:'l2',title:'Sample: 1 Kanal House — DHA Phase 6',phase:'Phase 6',type:'House',purpose:'Buy',price:'On enquiry',status:'Sample (not a real listing)',desc:'Sample layout only.'},
+{id:'l3',title:'Sample: 10 Marla File — DHA Phase 9',phase:'Phase 9',type:'File',purpose:'Buy',price:'On enquiry',status:'Sample (not a real listing)',desc:'Sample layout only.'},
+]);
+let enquiries=load('ie_enquiries',[]), articles=load('ie_articles',[]), settings=load('ie_settings',{business:'Islam Estate — DHA Real Estate',phone:'0321 4000 646',email:'farazdha@gmail.com',address:'DHA Lahore (street address not shown on site — owner to confirm)',hours:'Not shown on site — owner to confirm'});
+(function importPublic(){const pub=load('ie_public_enquiries',[]); let ch=false; pub.forEach(b=>{if(!enquiries.find(x=>x.publicId===b.id)){enquiries.push({id:uid(),publicId:b.id,name:b.name,phone:b.phone,interest:b.interest,phase:b.phase,msg:b.msg,status:'New',date:todayStr()}); ch=true;}}); if(ch){save('ie_enquiries',enquiries); logAudit('Import public enquiries','Imported '+pub.length+' demo enquiry(ies)');}})();
+function saveAll(){save('ie_listings',listings);save('ie_enquiries',enquiries);save('ie_articles',articles);save('ie_settings',settings)}
+function showMsg(t){$('#msg').innerHTML='<div class="msg">'+esc(t)+'</div>'; setTimeout(()=>{$('#msg').innerHTML=''},6000)}
+const TABS=['Dashboard','Listings','Enquiries','Articles','Settings']; let cur='Dashboard';
+function renderTabs(){$('#tabs').innerHTML=TABS.map(t=>'<button class="'+(t===cur?'on':'')+'" onclick="goTab(\''+t+'\')">'+t+'</button>').join('')}
+function goTab(n){cur=n; renderTabs(); render();}
+function table(head,rows){return '<div style="overflow:auto"><table><tr>'+head.map(h=>'<th>'+h+'</th>').join('')+'</tr>'+rows.join('')+'</table></div>'}
+function render(){const v=$('#view');
+ if(cur==='Dashboard'){
+   const nw=enquiries.filter(e=>e.status==='New').length;
+   v.innerHTML='<div class="grid"><div class="card kpi"><b>'+listings.length+'</b>Listings (incl. samples)</div><div class="card kpi"><b>'+enquiries.length+'</b>Total enquiries</div><div class="card kpi"><b>'+nw+'</b>New enquiries</div><div class="card kpi"><b>'+articles.length+'</b>Articles in CMS</div></div><div class="card"><h3>Latest enquiries</h3>'+table(['Name / Phone','Interest','Phase','Status','Date'],enquiries.slice(-10).reverse().map(e=>'<tr><td>'+esc(e.name)+'<br>'+esc(e.phone)+'</td><td>'+esc(e.interest)+'</td><td>'+esc(e.phase)+'</td><td>'+esc(e.status)+'</td><td>'+esc(e.date)+'</td></tr>').join('')||'<tr><td colspan="5">No enquiries yet — use the public demo enquiry form.</td></tr>')+'</div><div class="card"><h3>Audit log</h3><ul>'+load('ie_audit',[]).slice(0,10).map(a=>'<li>'+esc(a.t)+' — '+esc(a.a)+' — '+esc(a.d)+'</li>').join('')||'<li>No actions yet.</li>'+'</ul></div>';
+ }
+ if(cur==='Listings'){
+   v.innerHTML='<div class="card"><h3>Add listing (real listings only in production — samples are marked as samples)</h3><form onsubmit="return saveListing(event)"><div class="grid3"><div><label>Title</label><input name="title" required></div><div><label>Phase</label><select name="phase"><option>Phase 1</option><option>Phase 2</option><option>Phase 3</option><option>Phase 4</option><option>Phase 5</option><option>Phase 6</option><option>Phase 7</option><option>Phase 8</option><option>Phase 9</option></select></div><div><label>Type</label><select name="type"><option>Plot</option><option>House</option><option>File</option><option>Commercial Plot</option></select></div><div><label>Purpose</label><select name="purpose"><option>Buy</option><option>Sell / Plot Wanted</option></select></div><div><label>Price (or "On enquiry")</label><input name="price" value="On enquiry"></div><div><label>Status</label><select name="status"><option>Published</option><option>Draft</option><option>Sample (not a real listing)</option></select></div></div><label>Description</label><textarea name="desc"></textarea><button class="btn">Save listing</button></form></div>'+
+   '<div class="card">'+table(['Title','Phase / Type','Purpose','Price','Status','Actions'],listings.map(l=>'<tr><td>'+esc(l.title)+'</td><td>'+esc(l.phase)+' / '+esc(l.type)+'</td><td>'+esc(l.purpose)+'</td><td>'+esc(l.price)+'</td><td>'+esc(l.status)+'</td><td><button class="btn small danger" onclick="delListing(\''+l.id+'\')">Delete</button></td></tr>').join(''))+'</div>';
+ }
+ if(cur==='Enquiries'){
+   v.innerHTML='<div class="card"><h3>Enquiries</h3>'+table(['Name / Phone','Interest','Phase','Message','Status','Actions'],enquiries.map(e=>'<tr><td>'+esc(e.name)+'<br>'+esc(e.phone)+'</td><td>'+esc(e.interest)+'</td><td>'+esc(e.phase)+'</td><td>'+esc(e.msg)+'</td><td>'+esc(e.status)+'</td><td><button class="btn small" onclick="setEnq(\''+e.id+'\',\'Contacted\')">Contacted</button><button class="btn small" onclick="setEnq(\''+e.id+'\',\'Closed\')">Closed</button></td></tr>').join('')||'<tr><td colspan="6">No enquiries yet.</td></tr>')+'</div>';
+ }
+ if(cur==='Articles'){
+   v.innerHTML='<div class="card"><h3>Add article (existing DHA articles stay for SEO — this CMS adds new ones)</h3><form onsubmit="return saveArticle(event)"><div><label>Title</label><input name="title" required></div><div><label>Category</label><input name="cat" value="DHA Lahore"></div><label>Content</label><textarea name="content" rows="4"></textarea><button class="btn">Save article (Draft)</button></form></div>'+
+   '<div class="card">'+table(['Title','Category','Date'],articles.map(a=>'<tr><td>'+esc(a.title)+'</td><td>'+esc(a.cat)+'</td><td>'+esc(a.date)+'</td></tr>').join('')||'<tr><td colspan="3">No CMS articles yet. The live site already has years of DHA articles — do not delete them in production.</td></tr>')+'</div>';
+ }
+ if(cur==='Settings'){
+   v.innerHTML='<div class="card"><h3>Business settings</h3><form onsubmit="return saveSettings(event)"><div><label>Business name</label><input name="business" value="'+esc(settings.business)+'"></div><div><label>Phone / WhatsApp</label><input name="phone" value="'+esc(settings.phone)+'"></div><div><label>Email</label><input name="email" value="'+esc(settings.email)+'"></div><div><label>Address (owner to confirm — none shown on site)</label><input name="address" value="'+esc(settings.address)+'"></div><div><label>Hours (owner to confirm)</label><input name="hours" value="'+esc(settings.hours)+'"></div><button class="btn">Save settings</button></form></div>';
+ }
+}
+function saveListing(e){e.preventDefault(); const f=e.target; listings.push({id:uid(),title:f.title.value,phase:f.phase.value,type:f.type.value,purpose:f.purpose.value,price:f.price.value,status:f.status.value,desc:f.desc.value}); saveAll(); logAudit('Listing saved',f.title.value); showMsg('Listing saved.'); render(); return false;}
+function delListing(id){listings=listings.filter(l=>l.id!==id); saveAll(); logAudit('Listing deleted',id); showMsg('Listing deleted.'); render();}
+function setEnq(id,st){const e=enquiries.find(x=>x.id===id); e.status=st; saveAll(); logAudit('Enquiry '+st,e.name); showMsg('Enquiry set to '+st+'.'); render();}
+function saveArticle(e){e.preventDefault(); const f=e.target; articles.push({id:uid(),title:f.title.value,cat:f.cat.value,content:f.content.value,date:todayStr()}); saveAll(); logAudit('Article saved',f.title.value); showMsg('Article saved as Draft.'); render(); return false;}
+function saveSettings(e){e.preventDefault(); const f=e.target; settings={business:f.business.value,phone:f.phone.value,email:f.email.value,address:f.address.value,hours:f.hours.value}; save('ie_settings',settings); logAudit('Settings saved',''); showMsg('Settings saved.'); render(); return false;}
+function resetDemo(){if(!confirm('Reset ALL demo CMS data?'))return; ['ie_listings','ie_enquiries','ie_articles','ie_settings','ie_audit','ie_public_enquiries'].forEach(k=>localStorage.removeItem(k)); location.reload();}
+renderTabs(); render();
+</script></body></html>

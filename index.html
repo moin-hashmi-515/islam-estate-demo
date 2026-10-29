@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islam Estate — DHA Real Estate Lahore | Demo Concept</title>
+<meta name="description" content="Demo concept for a DHA Lahore listings portal for Islam Estate: searchable plots, houses and files by phase, with working enquiry forms.">
+<style>
+:root{--orange:#E67E22;--black:#111;--navy:#1a1a1a;--grey:#555;--smoke:#F2F2F2;--line:#E5E5E5}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#333;line-height:1.6;background:#fff}
+h1,h2,h3{color:var(--black);line-height:1.2}
+.demo{position:sticky;top:0;z-index:50;background:#111;color:#fff;text-align:center;padding:10px 14px;font-size:13px}.demo b{color:var(--orange)}
+header{background:#111;color:#fff;position:sticky;top:38px;z-index:40}.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0;gap:16px;flex-wrap:wrap}
+.brand{border:2px dashed var(--orange);padding:8px 14px;font-weight:800;font-size:20px}nav a{margin-left:18px;color:#fff;text-decoration:none;font-weight:600}
+.hero{background:var(--smoke);padding:52px 0}.hero h1{font-size:38px;max-width:720px}
+.btn{display:inline-block;background:var(--orange);color:#fff!important;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:800;border:0;cursor:pointer}
+section{padding:48px 0}.card{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tag{display:inline-block;background:#FDEBD0;color:#7e5109;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:9px;font-size:15px;margin-bottom:10px}
+label{font-size:13px;font-weight:700;display:block;margin-bottom:4px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:12px}form .full{grid-column:1/-1}
+footer{background:#111;color:#ddd;padding:32px 0}footer a{color:var(--orange)}
+.note{background:#FFF3CD;border:1px solid #E8DDC8;border-radius:12px;padding:14px;font-size:14px}
+@media(max-width:760px){.grid,.grid2,form{grid-template-columns:1fr}.hero h1{font-size:30px}}
+</style></head><body>
+<div class="demo"><b>DEMO CONCEPT</b> — Pitch sample by Moin Hashmi. <b>Not</b> the official Islam Estate / DHA Real Estate website. Listings below are <b>sample layouts only — price on enquiry, not real listings</b> — and the enquiry form sends nothing.</div>
+<header><div class="wrap nav"><div class="brand">DHA Real Estate.pk</div><nav><a href="#listings">Listings</a><a href="#enquiry">Enquiry</a><a href="#contact">Contact</a></nav></div></header>
+<main>
+<section class="hero"><div class="wrap">
+<h1>Buy &amp; sell property in DHA Lahore — search by phase, not by scrolling articles</h1>
+<p>Islam Estate® — DHA Authorized Company. Find plots, houses and files by DHA phase and type, then enquire in one working form. Your existing articles on DHA rates and transfers stay — they keep bringing search traffic — but now they lead to listings that capture enquiries.</p>
+<p><a class="btn" href="#listings">Search Sample Listings</a></p>
+</div></section>
+
+<section id="listings"><div class="wrap">
+<h2>Search listings (demo filters — these actually work)</h2>
+<div class="card" style="margin-bottom:16px"><div class="grid" style="grid-template-columns:repeat(3,1fr)">
+<div><label>Phase</label><select id="fPhase"><option value="">All phases</option><option>Phase 1</option><option>Phase 2</option><option>Phase 3</option><option>Phase 4</option><option>Phase 5</option><option>Phase 6</option><option>Phase 7</option><option>Phase 8</option><option>Phase 9</option></select></div>
+<div><label>Type</label><select id="fType"><option value="">All types</option><option>Plot</option><option>House</option><option>File</option><option>Commercial Plot</option></select></div>
+<div><label>Purpose</label><select id="fPurpose"><option value="">Buy or Sell</option><option>Buy</option><option>Sell / Plot Wanted</option></select></div>
+</div></div>
+<div class="grid" id="listGrid"></div>
+<p style="font-size:13px;color:#666">All cards below are sample layouts for the demo. No real property, price or address is claimed — in the live CMS, the owner adds real listings with real prices, photos and enquiry buttons.</p>
+</div></section>
+
+<section id="enquiry" style="background:var(--smoke)"><div class="wrap"><div class="grid2">
+<div><h2>Enquire about a property</h2><p>This is the form that is currently broken on the live site's Plot Wanted page — here it actually works (in the demo, it saves to the CMS in this browser and sends nothing to the business).</p><div class="note"><b>What this demo fixes:</b> searchable listings by phase/type, a working enquiry form (not raw shortcode), price-on-enquiry listings until real prices are added, and a CMS to add/edit listings and manage enquiries — while keeping the existing DHA articles for SEO.</div></div>
+<div class="card"><form id="enqForm">
+<div><label>Name</label><input id="name" required></div><div><label>Phone / WhatsApp</label><input id="phone" required></div>
+<div><label>Interest</label><select id="interest"><option>Plot</option><option>House</option><option>File</option><option>Commercial Plot</option><option>Plot Wanted — I want to sell</option></select></div>
+<div><label>DHA Phase</label><select id="phase"><option>Phase 1</option><option>Phase 2</option><option>Phase 3</option><option>Phase 4</option><option>Phase 5</option><option>Phase 6</option><option>Phase 7</option><option>Phase 8</option><option>Phase 9</option></select></div>
+<div class="full"><label>Message</label><textarea id="msg" rows="3" placeholder="e.g. 1 kanal plot, budget range, preferred phase"></textarea></div>
+<div class="full"><button class="btn" type="submit" style="width:100%">Send Enquiry — Demo Only</button><p id="done" style="display:none;background:#EAF6EC;border-radius:10px;padding:12px"></p></div>
+</form></div>
+</div></div></section>
+
+<section id="contact"><div class="wrap"><div class="card">
+<h2>Contact</h2><p><b>Islam Estate® — DHA Authorized Company</b><br>Buy &amp; Sell Real Estate in Defence (DHA) Lahore<br>Call / WhatsApp (as listed on site): 0321 4000 646<br>Email (as listed on site): farazdha@gmail.com<br>No street address or hours were shown on the site pages checked — the live CMS would add them once the owner confirms them.</p>
+</div></div></section>
+</main>
+<footer><div class="wrap"><p><b style="color:var(--orange)">ISLAM ESTATE — DEMO CONCEPT</b><br>Built as a pitch sample by Moin Hashmi, Lahore. Not affiliated with, or endorsed by, Islam Estate / DHA Real Estate. Sample listings are layouts only. No enquiry is sent from this demo.</p></div></footer>
+<script>
+const SAMPLES=[
+{phase:'Phase 5',type:'Plot',purpose:'Buy',title:'Sample: 1 Kanal Plot — DHA Phase 5',note:'Corner / facing park sample layout. Price on enquiry.'},
+{phase:'Phase 6',type:'House',purpose:'Buy',title:'Sample: 1 Kanal House — DHA Phase 6',note:'Sample house layout with photos and enquiry button in the live version.'},
+{phase:'Phase 9',type:'File',purpose:'Buy',title:'Sample: 10 Marla File — DHA Phase 9',note:'Sample file layout. Price on enquiry.'},
+{phase:'Phase 4',type:'Commercial Plot',purpose:'Buy',title:'Sample: Commercial Plot — DHA Phase 4',note:'Sample commercial layout. Price on enquiry.'},
+{phase:'Phase 7',type:'Plot',purpose:'Sell / Plot Wanted',title:'Sample: Plot Wanted — DHA Phase 7',note:'Sample "plot wanted" enquiry layout — owner wants to sell.'},
+{phase:'Phase 8',type:'House',purpose:'Buy',title:'Sample: 10 Marla House — DHA Phase 8',note:'Sample house layout. Price on enquiry.'},
+];
+function render(){
+ const ph=document.getElementById('fPhase').value, ty=document.getElementById('fType').value, pu=document.getElementById('fPurpose').value;
+ const list=SAMPLES.filter(s=>(!ph||s.phase===ph)&&(!ty||s.type===ty)&&(!pu||s.purpose===pu));
+ document.getElementById('listGrid').innerHTML=list.map(s=>'<div class="card"><span class="tag">'+s.phase+' • '+s.type+'</span><h3>'+s.title+'</h3><p>'+s.note+'</p><p><b>Price on enquiry</b></p><a class="btn" href="#enquiry">Enquire</a></div>').join('')||'<p>No sample listings match those filters. Try "All phases".</p>';
+}
+['fPhase','fType','fPurpose'].forEach(id=>document.getElementById(id).addEventListener('change',render));
+render();
+document.getElementById('enqForm').addEventListener('submit',function(e){e.preventDefault();
+ const b={id:'pub'+Date.now(),name:document.getElementById('name').value,phone:document.getElementById('phone').value,interest:document.getElementById('interest').value,phase:document.getElementById('phase').value,msg:document.getElementById('msg').value};
+ try{var arr=JSON.parse(localStorage.getItem('ie_public_enquiries')||'[]'); arr.push(b); localStorage.setItem('ie_public_enquiries',JSON.stringify(arr));}catch(e){}
+ const d=document.getElementById('done'); d.style.display='block'; d.innerHTML='<b>Demo enquiry saved:</b> Thank you, '+b.name+'. In this demo it is saved in this browser for the CMS to review — it is NOT sent to Islam Estate.';
+});
+</script>
+</body></html>
